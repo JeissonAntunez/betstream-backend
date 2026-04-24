@@ -1,87 +1,13 @@
-# ===========================
-# BetStream API Configuration
-# ===========================
+server:
+  port: 8090
+
 spring:
   application:
     name: betstream-api
 
-  # R2DBC - Supabase PostgreSQL (Reactive)
-  r2dbc:
-      url: r2dbc:postgresql://${SUPABASE_HOST}:${SUPABASE_PORT}/${SUPABASE_DB}?sslmode=require&preparedStatementCacheQueries=0
-      username: ${SUPABASE_USER}
-      password: ${SUPABASE_PASSWORD}
-      pool:
-        initial-size: 5
-        max-size: 20
-        max-idle-time: 30m
-
-  # Redis
-  data:
-    redis:
-      host: ${REDIS_HOST:redis}
-      port: ${REDIS_PORT:6379}
-      password: ${REDIS_PASSWORD:}
-      lettuce:
-        pool:
-          max-active: 16
-          max-idle: 8
-
-  # RabbitMQ
-  rabbitmq:
-    host: ${RABBITMQ_HOST:rabbitmq}
-    port: ${RABBITMQ_PORT:5672}
-    username: ${RABBITMQ_USER:guest}
-    password: ${RABBITMQ_PASSWORD:guest}
-    virtual-host: /
-
-  # Security
-  security:
-    jwt:
-      secret: ${JWT_SECRET:betstream-super-secret-key-change-in-production-minimum-32-chars}
-      expiration: 86400000 # 24h in ms
-      refresh-expiration: 604800000 # 7d in ms
-
-# Server
-server:
-  port: ${SERVER_PORT:8080}
-  compression:
-    enabled: true
-    mime-types: application/json,text/event-stream
-
-# Actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,metrics,prometheus
-  metrics:
-    export:
-      prometheus:
-        enabled: true
-
-# Logging
-logging:
-  level:
-    com.betstream: DEBUG
-    org.springframework.r2dbc: WARN
-    io.r2dbc.postgresql: WARN
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-
-# BetStream Custom Config
-betstream:
-  cors:
-    allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
-  odds:
-    update-interval-ms: 3000     # Odds refresh every 3s
-    fluctuation-range: 0.15      # Max odds change per update (15%)
-  sse:
-    heartbeat-interval-ms: 15000 # SSE keep-alive
-  rabbitmq:
-    exchanges:
-      events: betstream.events
-      bets: betstream.bets
-    queues:
-      odds-update: betstream.odds.update
-      bet-placed: betstream.bet.placed
-      bet-settled: betstream.bet.settled
+# Esto desactiva el chequeo de base de datos al arrancar
+autoconfigure:
+  exclude:
+    - org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration
+    - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+    - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
