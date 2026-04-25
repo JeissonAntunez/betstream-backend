@@ -1,4 +1,5 @@
-package com.Learning.controller;
+package com.drive.service;
+
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,17 +10,14 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
-/*
+
     @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         return http
                 .csrf(csrf -> csrf.disable())
-                .authorizeExchange(auth -> auth
-                        .pathMatchers("/api/**").permitAll()  // tus endpoints públicos
-                        .anyExchange().authenticated()
+                .authorizeExchange(exchanges -> exchanges
+                        .anyExchange().permitAll() // Permite acceso a todo por ahora
                 )
                 .build();
     }
-*/
-
 }

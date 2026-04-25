@@ -22,7 +22,7 @@ import java.util.List;
 @EnableWebFluxSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
+/*
     @Value("${betstream.cors.allowed-origins}")
     private String allowedOrigins;
 
@@ -66,5 +66,5 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", config);
         return source;
-    }
+    } */
 }
