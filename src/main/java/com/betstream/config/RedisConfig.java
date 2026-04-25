@@ -9,7 +9,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfig {
-    @Bean
+  /*  @Bean
     @Primary
     public ReactiveRedisTemplate<String, String> reactiveRedisTemplate(
             ReactiveRedisConnectionFactory connectionFactory) {
@@ -21,5 +21,5 @@ public class RedisConfig {
                         .hashValue(StringRedisSerializer.UTF_8)
                         .build();
         return new ReactiveRedisTemplate<>(connectionFactory, context);
-    }
+    }*/
 }
